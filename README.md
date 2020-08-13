@@ -47,21 +47,21 @@ Enter the command: ```sudo passwd postgres```
 Create new user  
 `CREATE USER name [ [ WITH ] option [ ... ] ]`  
 Where options can be:  
-   `SUPERUSER | NOSUPERUSER
-    | CREATEDB | NOCREATEDB
-    | CREATEROLE | NOCREATEROLE
-    | CREATEUSER | NOCREATEUSER
-    | INHERIT | NOINHERIT
-    | LOGIN | NOLOGIN
-    | CONNECTION LIMIT connlimit
-    | [ ENCRYPTED | UNENCRYPTED ] PASSWORD 'password'
-    | VALID UNTIL 'timestamp' 
-    | IN ROLE role_name [, ...]
-    | IN GROUP role_name [, ...]
-    | ROLE role_name [, ...]
-    | ADMIN role_name [, ...]
-    | USER role_name [, ...]
-    | SYSID uid   
+   `SUPERUSER | NOSUPERUSER  
+    | CREATEDB | NOCREATEDB  
+    | CREATEROLE | NOCREATEROLE  
+    | CREATEUSER | NOCREATEUSER  
+    | INHERIT | NOINHERIT  
+    | LOGIN | NOLOGIN  
+    | CONNECTION LIMIT connlimit  
+    | [ ENCRYPTED | UNENCRYPTED ] PASSWORD 'password'  
+    | VALID UNTIL 'timestamp'   
+    | IN ROLE role_name [, ...]  
+    | IN GROUP role_name [, ...]  
+    | ROLE role_name [, ...]  
+    | ADMIN role_name [, ...]  
+    | USER role_name [, ...]  
+    | SYSID uid     
     `
 Lets create a user who can login and create database and interact with them.  
 `CREATE ROLE $username WITH LOGIN PASSWORD = 'password-goes-here';`  
