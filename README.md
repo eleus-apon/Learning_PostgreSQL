@@ -102,27 +102,25 @@ To swithc between databases, type `\c $dbname` ex-`\c testdb`.
 # Create Tables
 To create data table:
 
-`CREATE`
-
-`
+```
 CREATE TABLE [IF NOT EXISTS] table_name (  
    column1 datatype(length) column_contraint,  
    column2 datatype(length) column_contraint,  
    column3 datatype(length) column_contraint,  
    table_constraints  
 );
-`
+```
 Example:
-`
+```
 CREATE TABLE "person"(
    id int,
    first_name VARCHAR(50),
    last_name VARCHAR(50),
    gender VARCHAR(10),
    date_of_birth TIMESTAMP);
-`
+```
 ## Creating Table with COnstraints
-`
+```
 CREATE TABLE "person"(
    id SERIAL NOT NULL PRIMARY KEY,
    first_name VARCHAR(50) NOT NULL,
@@ -130,7 +128,7 @@ CREATE TABLE "person"(
    gender VARCHAR(10) NOT NULL,
    date_of_birth TIMESTAMP NOT NULL,
    email VARCHAR(150));
-`
+```
 
 To view the newly created data table: `\d $tablename`, in our case `\d person`
 ![Capture_](https://user-images.githubusercontent.com/35254833/90171605-8ea8a680-ddc3-11ea-82ea-9038e69fd73e.PNG)
@@ -158,11 +156,61 @@ To see the full table in the Database:
 `SELECT * FROM $table_name;` , Ex: `SELECT * FROM person;`
 ![Capture__](https://user-images.githubusercontent.com/35254833/90176910-8c4a4a80-ddcb-11ea-83ac-8cb313de6b33.PNG)
 
-# Querying Data
+# Select From
+Syntax:
+```
+SELECT * FROM $ table name
+```
+To select data more specifically:
+```
+SELECT $column_name_a, $column_name_b,... $column_name_n FROM $table_name;
+```
+Example: `SELECT email FROM person;`
+
+# Order By
+Syntax:
+```
+SELECT * FROM person;
+1 2 3 4 5 ASC
+5 4 3 2 1 DSC
+#To represent data order by country in ascending mode
+SELECT * FROM person ORDER BY country_of_birth;
+
+#To represent data order by country in descending mode
+SELECT * FROM person ORDER BY country_of_birth DSC;
+
+```
+More Example:
+```
+#To represent data order by name in ascending mode
+SELECT * FROM person ORDER BY first_name;
+
+#To represent data order by name in descending mode
+SELECT * FROM person ORDER BY first_name DSC;
+```
+![Capture___](https://user-images.githubusercontent.com/35254833/90183938-2d3e0300-ddd6-11ea-8053-18e9b91ada92.PNG)
+
+# Distinct
+Syntax:
+
+Example:
+`
+SELECT DISTINCT country_of_birth FROM person ORDER BY country_of_birth;
+`
+![Capture](https://user-images.githubusercontent.com/35254833/90184309-b8b79400-ddd6-11ea-9d13-d0fb72ab8ee3.PNG)
+
+# Where Clause and AND
+Where claus allows us to filter the data based on conditions.
+Example:
+```
+SELECT * FROM person WHERE gender = 'Female';
+
+#Multiple Condition
+SELECT * FROM person WHERE gender = 'Female' AND country_of_birth = "Africa";
+SELECT * FROM person WHERE gender = 'Female' AND (country_of_birth = 'Afganistan' OR country_of_birth ='China');
+```
+
+![Capture](https://user-images.githubusercontent.com/35254833/90185164-17c9d880-ddd8-11ea-8d47-a8525f805c6e.PNG)
 
 
-
-
-
-
-
+`
