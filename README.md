@@ -47,7 +47,8 @@ Enter the command: ```sudo passwd postgres```
 Create new user  
 `CREATE USER name [ [ WITH ] option [ ... ] ]`  
 Where options can be:  
-   `SUPERUSER | NOSUPERUSER  
+    ```
+    SUPERUSER | NOSUPERUSER  
     | CREATEDB | NOCREATEDB  
     | CREATEROLE | NOCREATEROLE  
     | CREATEUSER | NOCREATEUSER  
@@ -62,7 +63,7 @@ Where options can be:
     | ADMIN role_name [, ...]  
     | USER role_name [, ...]  
     | SYSID uid     
-    `
+    ```
 
 To assign new role:
 `ALTER USER #username WITH #Role;`
@@ -139,14 +140,14 @@ To insert a single row data into the table:
 INSERT INTO $table_name ($column_1, $column_2, ... $column_N) VALUES ($value_of_column_1, $value_of_column_2, ... $value_of_column_N);
 `
 To insert multiple rows into the table:
-`
+```
 INSERT INTO $table_name ($column_1, $column_2, ... $column_N) VALUES ($row_1_column_1, $row_1_column_2, ... $row_1_column_N),($row_2_column_1, $row_2_column_2, ... $row_2_column_N),($row_N_column_1, $row_N_column_2, ... $row_N_column_N);
-`
+```
 Example:
-`
+```
 INSERT INTO person (first_name, last_name, gender, date_of_birth) VALUES ('Eleus', 'Apon', 'Male', date '1993-09-23');
 
-`
+```
 It should through an output `INSERT 0 1`, which means it was successfull. 
 ## Genrate and insert 1000 of data into the table:
 To generate data [Mockaroo](https://www.mockaroo.com/)
@@ -212,5 +213,22 @@ SELECT * FROM person WHERE gender = 'Female' AND (country_of_birth = 'Afganistan
 
 ![Capture](https://user-images.githubusercontent.com/35254833/90185164-17c9d880-ddd8-11ea-8d47-a8525f805c6e.PNG)
 
+# Comparison Operators
+| syntax | what it means                            | example                              |
+|--------|------------------------------------------|--------------------------------------|
+| =      | equals to                                | id = 2                               |
+| >      | greater than                             | id > 2                               |
+| <      | less than                                | id < 10                              |
+| >=     | greater than or equals to                | id >= 10                             |
+| <=     | less than or equals to                   | id <= 100                            |
+| <>     | not equals to                            | id <> 102                            |
+| ||     | contact strings                          | 'hello ' || 'world'                  |
+| !!=    | not in                                   | 3 !! = i                             |
+| ~~     | like                                     | 'scrappy,marc,hermit' ~~ '%scrappy%' |
+| !~~    | not like                                 | 'bruce' !~~ '%al%'                   |
+| ~      | match (regex), case sensitive            | 'thomas' ~ '*.thomas*.'              |
+| ~*     | match (regex), case insensitive          | 'thomas' ~* '*.thomas*.'             |
+| !~     | Does not match (regex), case sensitive   | 'thomas' !~ '*.Thomas*.'             |
+| !~*    | Does not match (regex), case insensitive | 'thomas' !~ '*.vadim*.'              |
 
 `
