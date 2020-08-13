@@ -6,7 +6,7 @@ Learning SQL Database and exploring the PostgreSQL
 - PostgreSQL
 - Installation
 - Running the psql
-- Managing Users
+- Managing Users&Roles
 
 # Database
 A database is an organized collection of structured information, or data, typically stored electronically in a computer system. A database is usually controlled by a database management system (DBMS). Together, the data and the DBMS, along with the applications that are associated with them, are referred to as a database system, often shortened to just database.
@@ -34,25 +34,37 @@ sudo service postgresql stop
 ```
 
 # Running the psql
-To run PostgreSQL with psql shell:
-Start your postgres service: `sudo service postgresql start`
-Connect to the postgres service and open the psql shell: `sudo -u postgres psql`
-To exit postgres=# enter: `\q` or use the shortcut key: Ctrl+D
+To run PostgreSQL with psql shell:  
+Start your postgres service: `sudo service postgresql start`  
+Connect to the postgres service and open the psql shell: `sudo -u postgres psql`  
+To exit postgres=# enter: `\q` or use the shortcut key: Ctrl+D  
+Please make sure the set the default admin password prio to connect the database, process explained in below topic.
 
-# Managing Users
-The default admin user, ```postgres```, needs a password assigned in order to connect to a database. To set a password:
-Enter the command: ```sudo passwd postgres```
+# Managing Users&Roles
+The default admin user, ```postgres```, needs a password assigned in order to connect to a database. To set a password:  
+Enter the command: ```sudo passwd postgres```  
 
-Create new user
-`CREATE USER name [ [ WITH ] option [ ... ] ]`
-options are
-   `SYSID uid 
+Create new user  
+`CREATE USER name [ [ WITH ] option [ ... ] ]`  
+Where options can be:  
+   `SUPERUSER | NOSUPERUSER
     | CREATEDB | NOCREATEDB
+    | CREATEROLE | NOCREATEROLE
     | CREATEUSER | NOCREATEUSER
-    | IN GROUP groupname [, ...]
+    | INHERIT | NOINHERIT
+    | LOGIN | NOLOGIN
+    | CONNECTION LIMIT connlimit
     | [ ENCRYPTED | UNENCRYPTED ] PASSWORD 'password'
-    | VALID UNTIL 'abstime'
+    | VALID UNTIL 'timestamp' 
+    | IN ROLE role_name [, ...]
+    | IN GROUP role_name [, ...]
+    | ROLE role_name [, ...]
+    | ADMIN role_name [, ...]
+    | USER role_name [, ...]
+    | SYSID uid   
     `
-Lets create a user who can login and create database and interact with them.
-`CREATE ROLE $username WITH LOGIN PASSWORD = 'password-goes-here';`
-example: `CREATE ROLE eleus WITH LOGIN PASSWORD = '***';`
+Lets create a user who can login and create database and interact with them.  
+`CREATE ROLE $username WITH LOGIN PASSWORD = 'password-goes-here';`  
+example: `CREATE ROLE eleus WITH LOGIN PASSWORD = '***';`  
+
+CREATE USER is now an alias for CREATE ROLE. The only difference is that when the command is spelled CREATE USER, LOGIN is assumed by default, whereas NOLOGIN is assumed when the command is spelled CREATE ROLE.
