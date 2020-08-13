@@ -214,6 +214,7 @@ SELECT * FROM person WHERE gender = 'Female' AND (country_of_birth = 'Afganistan
 ![Capture](https://user-images.githubusercontent.com/35254833/90185164-17c9d880-ddd8-11ea-8d47-a8525f805c6e.PNG)
 
 # Comparison Operators
+We can use below comparison operators to filter down our data in the Where Claus.
 | syntax | what it means                            | example                              |
 |--------|------------------------------------------|--------------------------------------|
 | =      | equals to                                | id = 2                               |
@@ -231,4 +232,131 @@ SELECT * FROM person WHERE gender = 'Female' AND (country_of_birth = 'Afganistan
 | !~     | Does not match (regex), case sensitive   | 'thomas' !~ '*.Thomas*.'             |
 | !~*    | Does not match (regex), case insensitive | 'thomas' !~ '*.vadim*.'              |
 
-`
+# Limit, Offset & Fetch
+To select only a specific number of rows we can use these Parameters.
+Example:
+```
+#To filter only first 10 rows
+SELECT * FROM person LIMIT 10;
+
+#To filter data 15 to 25 number of rows
+SELECT * FROM person OFFSET 15 LIMIT 10;
+
+#To filter out data upto 15th row
+SELECT * FROM person OFFSET 15;
+
+#To filter data 15 to 25 number of rows
+SELECT * FROM person OFFSET 15 FETCH FIRST 10 ROW ONLY;
+```
+# IN
+Let's say we want to select all rows of specific countries. To do so instead of using Or in Where claus we can use IN Keyword.
+Exmple:
+```
+SELECT * FROM person WHERE country_of_birth IN('China', 'Brazil', 'France');
+```
+
+# Between
+To slect data from a range.
+Example:
+```
+SELECT * FROM person WHERE date_of_birth BETWEEN DATE '2000-01-01' AND '2015-01-01';
+```
+
+# Like & ILike
+Like: The PostgreSQL LIKE operator is used to match text values against a pattern using wildcards. If the search expression can be matched to the pattern expression, the LIKE operator will return true, which is 1.
+Example:
+```
+SELECT * FROM person WHERE email LIKE '_____@%';
+
+SELECT * FROM person WHERE email LIKE '%@facebook.com';
+# It will find all users whose email address ends with facebook.com
+```
+![Capture](https://user-images.githubusercontent.com/35254833/90190290-8ca11080-dde0-11ea-8856-cd856e081bc5.PNG)
+
+
+iLike:The key word ILIKE can be used instead of LIKE to make the match case-insensitive according to the active locale. This is not in the SQL standard but is a PostgreSQL extension. The operator ~~ is equivalent to LIKE , and ~~ corresponds to ILIKE. 
+Examlple: 
+```
+SELECT * FROM person WHERE country_of_birth ILIKE 'p%';
+```
+
+# Group By
+Allows us to group our data based on column.
+Example:
+```
+SELECT country_of_birth, COUNT(*) FROM person GROUP BY country_of_birth;
+SELECT country_of_birth, COUNT(*) FROM person GROUP BY country_of_birth ORDER BY country_of_birth;
+```
+![Capture](https://user-images.githubusercontent.com/35254833/90191116-1ac9c680-dde2-11ea-8613-22d94e8d37eb.PNG)
+
+##Group By Having
+For additional filtering on Group By, for example we want find all the countries with at-least 10 people.
+```
+SELECT country_of_birth, COUNT(*) FROM person GROUP BY country_of_birth HAVING COUNT(8) > 40 ORDER BY country_of_birth;
+# Having keyword must be placed before ORDER BY, we can set less than, equal or greater.
+```
+![Capture](https://user-images.githubusercontent.com/35254833/90191509-d854b980-dde2-11ea-9078-f037764bd9da.PNG)
+
+
+# Calculating Min, Max & Average
+MAX Example: `SELECT MAX(price) FROM car;`
+Min Example: `SELECT MIN(price) FROM car;`
+Avg Example: `SELECT AVG(price) FROM car;`
+Avg Example in round figure: `SELECT ROUND(AVG(price)) FROM car;`
+
+Grouping the info to see different price for individual make:
+` SELECT make, model, MIN(price) FROM car GROUP BY make, model; `
+` SELECT make, model, MAX(price) FROM car GROUP BY make, model; `
+
+# Sum
+`SELECT SUM(price) from car;`
+`SELECT make, SUM(price) FROM car GROUP BY make;`
+
+
+# Arithmatic Operators
+| syntax | what it means              | example      |
+|--------|----------------------------|--------------|
+| +      | addition                   | SELECT 2 + 5 |
+| -      | subtraction                | SELECT 5 -2  |
+| /      | division                   | 10 / 2       |
+| *      | multiplication             | 5 * 3        |
+| %      | modulo                     | 12 % 5       |
+| %      | truncate                   | % 4.5        |
+| !      | factorial                  | 3!           |
+| !!     | factorial (left operation) | !! 5         |
+| :      | natural Exponentiation     | : 3.0        |
+| ;      | natural Logarithm          | (; 5.0)      |
+| @      | absolute value             | @ -5.0       |
+| |/     | square root                | |/ 25.0      |
+| ||/    | cubic root                 | ||/ 27.0     |
+
+Arithmetic Operators (ROUND):
+```
+SELECT id, make, model, price, price * .10 FROM car;
+#calculating the 10 % of the main prices
+
+```
+
+# Time and Dates
+
+
+# Age Functions
+
+# Primary Keys
+
+# Constraints
+
+# Delete/Update Records
+
+
+# Relationship/Foreign Keys
+
+# Inner Joins
+
+# Left Joins
+
+# Serial & Sequesce
+
+# Extensions
+
+# UUID Data
