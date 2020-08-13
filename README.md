@@ -4,6 +4,9 @@ Learning SQL Database and exploring the PostgreSQL
 # Contents
 - Database
 - PostgreSQL
+- Installation
+- Running the psql
+- Managing Users
 
 # Database
 A database is an organized collection of structured information, or data, typically stored electronically in a computer system. A database is usually controlled by a database management system (DBMS). Together, the data and the DBMS, along with the applications that are associated with them, are referred to as a database system, often shortened to just database.
@@ -16,3 +19,40 @@ Details can be found [here!](https://www.oracle.com/database/what-is-database.ht
 PostgreSQL is a powerful, open source object-relational database system that uses and extends the SQL language combined with many features that safely store and scale the most complicated data workloads. PostgreSQL has earned a strong reputation for its proven architecture, reliability, data integrity, robust feature set, extensibility, and the dedication of the open source community behind the software to consistently deliver performant and innovative solutions. PostgreSQL runs on all major operating systems.
 
 More about [PostgreSQL!](https://www.postgresql.org/about/)
+
+# Installation[Ubuntu/WSL2]
+I have installed the PostgreSQL on Ubuntu on Windows System for Linux. Deatils can be found [here!](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database)
+Necessary Commands,
+```
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+psql --version
+
+sudo service postgresql status
+sudo service postgresql start
+sudo service postgresql stop
+```
+
+# Running the psql
+To run PostgreSQL with psql shell:
+Start your postgres service: `sudo service postgresql start`
+Connect to the postgres service and open the psql shell: `sudo -u postgres psql`
+To exit postgres=# enter: `\q` or use the shortcut key: Ctrl+D
+
+# Managing Users
+The default admin user, ```postgres```, needs a password assigned in order to connect to a database. To set a password:
+Enter the command: ```sudo passwd postgres```
+
+Create new user
+`CREATE USER name [ [ WITH ] option [ ... ] ]`
+options are
+   `SYSID uid 
+    | CREATEDB | NOCREATEDB
+    | CREATEUSER | NOCREATEUSER
+    | IN GROUP groupname [, ...]
+    | [ ENCRYPTED | UNENCRYPTED ] PASSWORD 'password'
+    | VALID UNTIL 'abstime'
+    `
+Lets create a user who can login and create database and interact with them.
+`CREATE ROLE $username WITH LOGIN PASSWORD = 'password-goes-here';`
+example: `CREATE ROLE eleus WITH LOGIN PASSWORD = '***';`
