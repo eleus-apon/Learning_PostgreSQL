@@ -63,8 +63,22 @@ Where options can be:
     | USER role_name [, ...]  
     | SYSID uid     
     `
+
 Lets create a user who can login and create database and interact with them.  
 `CREATE ROLE $username WITH LOGIN PASSWORD = 'password-goes-here';`  
 example: `CREATE ROLE eleus WITH LOGIN PASSWORD = '***';`  
 
 CREATE USER is now an alias for CREATE ROLE. The only difference is that when the command is spelled CREATE USER, LOGIN is assumed by default, whereas NOLOGIN is assumed when the command is spelled CREATE ROLE.
+
+To list all user accounts (or roles) in the current PostgreSQL database serve: `\du`
+
+# Creat DATABASE
+To show current databases `\l`
+
+To create a new databse:
+`CREATE DATABASE testdb;`
+![CreateDB](https://user-images.githubusercontent.com/35254833/90165425-71230f00-ddba-11ea-85ac-4baf78dba748.PNG)
+
+
+
+
