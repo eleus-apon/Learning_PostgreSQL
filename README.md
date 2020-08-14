@@ -32,7 +32,7 @@ Learning SQL Database and exploring the PostgreSQL.
 - [Constraints](#Constraints)
 - [Delete/Update Records](#Delete/Update-Records)
 - [Upsert](#Upsert)
-- [RRelationships [SQL Database]](#Relationships-[SQL Database])
+- [Relationships](#Relationships)
 - [PostgreSQL JOINS](#PostgreSQL-JOINS)
 - [Export Query Result to CSV](#Export-Query-Result-to-CSV)
 - [Serial & Sequesce](#Serial-&-Sequesce)
@@ -494,7 +494,7 @@ VALUES(value_list)
 ON CONFLICT target action;
 ```
 
-# Relationships [SQL Database]
+# Relationships
 When creating a database, common sense dictates that we use separate tables for different types of entities. Some examples are: customers, orders, items, messages etc... But we also need to have relationships between these tables. For instance, customers make orders, and orders contain items. These relationships need to be represented in the database. Also, when fetching data with SQL, we need to use certain types of JOIN queries to get what we need.
 
 There are several types of database relationships are as follows:
