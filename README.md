@@ -454,16 +454,73 @@ VALUES(value_list)
 ON CONFLICT target action;
 ```
 
-# Relationships
+# Relationships [SQL Database]
 When creating a database, common sense dictates that we use separate tables for different types of entities. Some examples are: customers, orders, items, messages etc... But we also need to have relationships between these tables. For instance, customers make orders, and orders contain items. These relationships need to be represented in the database. Also, when fetching data with SQL, we need to use certain types of JOIN queries to get what we need.
 
+There are several types of database relationships are as follows:
+- One to One Relationships
+In a one-to-one relationship, one record in a table is associated with one and only one record in another table. For example, in a school database, each student has only one student ID, and each student ID is assigned to only one person.
+![relational 07 03 2](https://user-images.githubusercontent.com/35254833/90256520-afc2d300-de67-11ea-934b-4563c04a2340.png)
 
-# Inner Joins
+- One to Many and Many to One Relationships
+In a one-to-many relationship, one record in a table can be associated with one or more records in another table. For example, each customer can have many sales orders.
+![relational 07 04 2](https://user-images.githubusercontent.com/35254833/90256641-d254ec00-de67-11ea-8cfc-a75b2b07358c.png)
 
-# Left Joins
+- Many to Many Relationships
+A many-to-many relationship occurs when multiple records in a table are associated with multiple records in another table. For example, a many-to-many relationship exists between customers and products: customers can purchase various products, and products can be purchased by many customers.
+
+Relational database systems usually don't allow you to implement a direct many-to-many relationship between two tables. Consider the example of keeping track of invoices. If there were many invoices with the same invoice number and one of your customers inquired about that invoice number, you wouldn't know which number they were referring to. This is one reason for assigning a unique value to each invoice.
+
+- Self Referencing Relationships
+This is used when a table needs to have a relationship with itself. For example, let's say you have a referral program. Customers can refer other customers to your shopping website.
+
+# PostgreSQL JOINS
+The PostgreSQL Joins clause is used to combine records from two or more tables in a database. A JOIN is a means for combining fields from two tables by using values common to each.
+
+There are 4 basic types of joins supported by PostgreSQL, namely:
+
+- Inner Joins
+the inner join returns a result set that contains row in the left table that matches the row in the right table.
+![5311](https://user-images.githubusercontent.com/35254833/90266987-af7e0400-de76-11ea-8a5d-c5d8428cd485.png)
+Syntax:
+`SELECT $columns FROM $table1 JOIN $table2 ON $table1.joining_column = $table2.reference_column;
+`
+
+- Left (Outer) Joins
+the left join returns a complete set of rows from the left table with the matching rows if available from the right table. If there is no match, the right side will have null values.
+![5511](https://user-images.githubusercontent.com/35254833/90267097-e3f1c000-de76-11ea-9250-8fdf045926c6.png)
+Syntax:
+`SELECT $columns FROM $table1 LEFT JOIN $table2 ON $table1.joining_column = $table2.reference_column;
+`
+
+- Right (Outer) Joins
+The RIGHT JOIN or RIGHT OUTER JOIN works exactly opposite to the LEFT JOIN. It returns a complete set of rows from the right table with the matching rows if available from the left table. If there is no match, the left side will have null values.
+![5711](https://user-images.githubusercontent.com/35254833/90267165-0257bb80-de77-11ea-9b55-8113f38ee3d8.png)
+Syntax:
+`Select * FROM table1 RIGHT [ OUTER ] JOIN table2 ON table1.column_name=table2.column_name;`
+
+- Full Outer Joins
+The full outer join or full join returns a result set that contains all rows from both the left and right tables, with the matching rows from both sides where available. If there is no match, the missing side contains null values.
+![592](https://user-images.githubusercontent.com/35254833/90267289-22877a80-de77-11ea-8ed5-9ac2dab97dcf.png)
+
+Some special PostgreSQL joins are below:
+- Cross Joins
+- Natural Joins
+
+# Export Query Result to CSV
+In order to export a table or query to csv use one of the following commands:
+`\copy [Table/Query] to '[Relative Path/filename.csv]' csv header `
 
 # Serial & Sequesce
+A sequence in PostgreSQL is a user-defined schema-bound object that generates a sequence of integers based on a specified specification.
+PostgreSQL provides three serial pseudo-types SMALLSERIAL, SERIAL, and BIGSERIAL with the following characteristics:
+| Name        | Storage Size | Range                          |
+|-------------|--------------|--------------------------------|
+| SMALLSERIAL | 2 bytes      | 1 to 32,767                    |
+| SERIAL      | 4 bytes      | 1 to 2,147,483,647             |
+| BIGSERIAL   | 8 bytes      | 1 to 9,223,372,036,854,775,807 |
 
-# Extensions
+# Conclusion
+This was my first step into learning Database. I followd the video tutorial available [here](https://www.youtube.com/watch?v=qw--VYLpxG4&t=7991s)
+To create table I have used this [link](https://thisdavej.com/copy-table-in-excel-and-paste-as-a-markdown-table/)
 
-# UUID Data
