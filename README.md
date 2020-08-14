@@ -2,11 +2,38 @@
 Learning SQL Database and exploring the PostgreSQL
 
 # Contents
-- Database
+- [Database](# Database)
 - PostgreSQL
 - Installation
 - Running the psql
 - Managing Users&Roles
+- Create/Delete DATABASE
+- Connect to a Database
+- Create Tables
+- Inserting data into Table
+- Select From
+- Order By
+- Distinct
+- Where Clause and AND
+- Comparison Operators
+- Limit, Offset & Fetch
+- IN
+- Between
+- Like & ILike
+- Group By
+- Calculating Min, Max & Average
+- Arithmatic Operators
+- Time and Dates
+- Age Functions
+- Primary Keys
+- Constraints
+- Delete/Update Records
+- Relationship/Foreign Keys
+- Inner Joins
+- Left Joins
+- Serial & Sequesce
+- Extensions
+- UUID Data
 
 # Database
 A database is an organized collection of structured information, or data, typically stored electronically in a computer system. A database is usually controlled by a database management system (DBMS). Together, the data and the DBMS, along with the applications that are associated with them, are referred to as a database system, often shortened to just database.
@@ -337,19 +364,99 @@ SELECT id, make, model, price, price * .10 FROM car;
 
 ```
 
-# Time and Dates
+# Coalesce
+COALESCE is a system in-built function that can be considered one of the conditional expressions available in PostgreSQL. NULLIF, GREATEST, LEAST, and COALESCE are the types of conditional expressions in PostgreSQL. The COALESCE function returns the first non-NULL expression in the specified list.
+Syntax: `COALESCE (argument_1, argument_2, …);`
+Example:`SELECT COALESCE(email, 'Email not provided)' FROM person`
 
+# Null IF
+The nullif() function returns a null value, if a the value of the field/column defined by the first parameter equals that of the second. Otherwise, it will return the original value.
+Example: `SELECT COALESCE(10 / NULLIF(0,0), 0);`
+
+# Time and Dates
+To show current time:
+```
+SELECT NOW();
+SELECT NOW()::DATE;
+SELECT NOW()::TIME;
+```
+Convert between TimeZone:
+```
+SHOW TIMEZONE;
+SELECT timezone('America/New_York','2016-06-01 00:00');
+```
+
+## Adding& Suntract Time
+```
+SELECT NOW();
+SELECT NOW() - INTERVAL 1 'YEAR';
+SELECT NOW() + INTERVAL 10 'MONTHS';
+SELECT NOW()::DATE + INTERVAL 10 'MONTHS';
+```
+
+## Extracting Fields From a Date
+```
+SLECT NOW()'
+SELECT EXTRACT(YEAR FROM NOW());
+SELECT EXTRACT(DAY FROM NOW());
+
+```
 
 # Age Functions
-
+he PostgreSQL age function returns the number of years, months, and days between two dates.
+Example:
+`
+SELECT first_name, last_name, gender, country_of_birth AGE(NOW(), date_of_birth) AS age FROM person;
+`
 # Primary Keys
+The PostgreSQL PRIMARY KEY is a column in a table which must contain a unique value which can be used to identify each and every row of a table uniquely. So it can be said that the PRIMARY KEY of a table is a combination of NOT NULL and UNIQUE constraint.
+
 
 # Constraints
+Constraints are the rules enforced on data columns on table. These are used to prevent invalid data from being entered into the database. This ensures the accuracy and reliability of the data in the database.
+## NOT NULL Constraint
+Ensures that a column cannot have NULL value.
+## UNIQUE Constraint
+Ensures that all values in a column are different.
+## Primary Keys
+The PostgreSQL PRIMARY KEY is a column in a table which must contain a unique value which can be used to identify each and every row of a table uniquely. So it can be said that the PRIMARY KEY of a table is a combination of NOT NULL and UNIQUE constraint.
+## FOREIGN Key
+Constrains data based on columns in other tables. 
+## CHECK Constraint
+The CHECK constraint ensures that all values in a column satisfy certain conditions.
+## EXCLUSION Constraint
+The EXCLUDE constraint ensures that if any two rows are compared on the specified column(s) or expression(s) using the specified operator(s), not all of these comparisons will return TRUE.
+
+To Dropping Constraints:
+`ALTER TABLE table_name DROP CONSTRAINT some_name;`
 
 # Delete/Update Records
+Delete:
+```
+SELECT * FROM person;
+DELETE FROM person; # It will delete everyone from the table
+DELETE FROM person WHERE id = 100; #To delete the row with id 100
+DELETE FROM person WHERE gender = 'Female' AND country_of_birth = 'England';
+DELETE FROM person WHERE gender = 'Male'; # To delete all Male from the table
+```
+Update:
+```
+SELECT * FROM person;
+UPDATE person SET email = 'tbeere1@economist.com' WHERE id 20;
+```
 
+# Upsert
+In relational databases, the term upsert is referred to as merge. The idea is that when you insert a new row into the table, PostgreSQL will update the row if it already exists, otherwise, it will insert the new row. That is why we call the action is upsert (the combination of update or insert).
+Syntax:
+```
+INSERT INTO table_name(column_list) 
+VALUES(value_list)
+ON CONFLICT target action;
+```
 
-# Relationship/Foreign Keys
+# Relationships
+When creating a database, common sense dictates that we use separate tables for different types of entities. Some examples are: customers, orders, items, messages etc... But we also need to have relationships between these tables. For instance, customers make orders, and orders contain items. These relationships need to be represented in the database. Also, when fetching data with SQL, we need to use certain types of JOIN queries to get what we need.
+
 
 # Inner Joins
 
