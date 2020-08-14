@@ -2,7 +2,7 @@
 Learning SQL Database and exploring the PostgreSQL
 
 # Contents
-- [Database](# Database)
+- [Database](#Database)
 - PostgreSQL
 - Installation
 - Running the psql
