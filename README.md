@@ -1,39 +1,44 @@
 # Learning_PostgreSQL
-Learning SQL Database and exploring the PostgreSQL
+Learning SQL Database and exploring the PostgreSQL.
+![1_PY24xlr4TpOkXW04HUoqrQ](https://user-images.githubusercontent.com/35254833/90280130-38536a80-de8c-11ea-863e-4452e33eef29.jpeg)
 
 # Contents
 - [Database](#Database)
-- PostgreSQL
-- Installation
-- Running the psql
-- Managing Users&Roles
-- Create/Delete DATABASE
-- Connect to a Database
-- Create Tables
-- Inserting data into Table
-- Select From
-- Order By
-- Distinct
-- Where Clause and AND
-- Comparison Operators
-- Limit, Offset & Fetch
-- IN
-- Between
-- Like & ILike
-- Group By
-- Calculating Min, Max & Average
-- Arithmatic Operators
-- Time and Dates
-- Age Functions
-- Primary Keys
-- Constraints
-- Delete/Update Records
-- Relationship/Foreign Keys
-- Inner Joins
-- Left Joins
-- Serial & Sequesce
-- Extensions
-- UUID Data
+- [PostgreSQL](#PostgreSQL)
+- [Installation](#Installation[Ubuntu/WSL2])
+- [Running the psql](#Running the psql)
+- [Managing Users&Roles](#Managing Users&Roles)
+- [Create/Delete DATABASE](#Create/Delete DATABASE)
+- [Connect to a Database](#Connect to a Database)
+- [Create/Delete DATABASE](#Create/Delete DATABASE)
+- [Connect to a Database](#Connect to a Database)
+- [Create Tables](#Create Tables)
+- [Inserting data into Table](#Inserting data into Table)
+- [Select From](#Select From)
+- [Order By](#Order By)
+- [Distinct](#Distinct)
+- [Where Clause and AND](#Where Clause and AND)
+- [Comparison Operators](#Comparison Operators)
+- [Limit, Offset & Fetch](#Limit, Offset & Fetch)
+- [IN](#IN)
+- [Between](#Between)
+- [Like & ILike](#Like & ILike)
+- [Group By](#Group By)
+- [Calculating Min, Max & Average](#Calculating Min, Max & Average)
+- [Arithmatic Operators](#Arithmatic Operators)
+- [Coalesce](#Coalesce)
+- [Null IF](#Null IF)
+- [Time and Dates](#Time and Dates)
+- [Age Functions](#Age Functions)
+- [Primary Keys](#Primary Keys)
+- [Constraints](#Constraints)
+- [Delete/Update Records](#Delete/Update Records)
+- [Upsert](#Upsert)
+- [RRelationships [SQL Database]](#Relationships [SQL Database])
+- [PostgreSQL JOINS](#PostgreSQL JOINS)
+- [Export Query Result to CSV](#Export Query Result to CSV)
+- [Serial & Sequesce](#Serial & Sequesce)
+- [Conclusion](#Conclusion)
 
 # Database
 A database is an organized collection of structured information, or data, typically stored electronically in a computer system. A database is usually controlled by a database management system (DBMS). Together, the data and the DBMS, along with the applications that are associated with them, are referred to as a database system, often shortened to just database.
@@ -74,32 +79,41 @@ Enter the command: ```sudo passwd postgres```
 Create new user  
 `CREATE USER name [ [ WITH ] option [ ... ] ]`  
 Where options can be:  
-    ```
-    SUPERUSER | NOSUPERUSER  
-    | CREATEDB | NOCREATEDB  
-    | CREATEROLE | NOCREATEROLE  
-    | CREATEUSER | NOCREATEUSER  
-    | INHERIT | NOINHERIT  
-    | LOGIN | NOLOGIN  
-    | CONNECTION LIMIT connlimit  
-    | [ ENCRYPTED | UNENCRYPTED ] PASSWORD 'password'  
-    | VALID UNTIL 'timestamp'   
-    | IN ROLE role_name [, ...]  
-    | IN GROUP role_name [, ...]  
-    | ROLE role_name [, ...]  
-    | ADMIN role_name [, ...]  
-    | USER role_name [, ...]  
-    | SYSID uid     
-    ```
+```
+SUPERUSER | NOSUPERUSER  
+| CREATEDB | NOCREATEDB  
+| CREATEROLE | NOCREATEROLE  
+| CREATEUSER | NOCREATEUSER  
+| INHERIT | NOINHERIT  
+| LOGIN | NOLOGIN  
+| CONNECTION LIMIT connlimit  
+| [ ENCRYPTED | UNENCRYPTED ] PASSWORD 'password'  
+| VALID UNTIL 'timestamp'   
+| IN ROLE role_name [, ...]  
+| IN GROUP role_name [, ...]  
+| ROLE role_name [, ...]  
+| ADMIN role_name [, ...]  
+| USER role_name [, ...]  
+| SYSID uid     
+```
 
 To assign new role:
-`ALTER USER #username WITH #Role;`
+```
+ALTER USER #username WITH #Role;
+```
 Example:
-`ALTER USER eleus WITH SUPERUSER;`
+```
+ALTER USER eleus WITH SUPERUSER;
+```
 
 Lets create a user who can login and create database and interact with them.  
-`CREATE ROLE $username WITH LOGIN PASSWORD = 'password-goes-here';`  
-example: `CREATE ROLE eleus WITH LOGIN PASSWORD = '***';`  
+```
+CREATE ROLE $username WITH LOGIN PASSWORD = 'password-goes-here';
+```  
+example: 
+```
+CREATE ROLE eleus WITH LOGIN PASSWORD = '***';
+```  
 
 CREATE USER is now an alias for CREATE ROLE. The only difference is that when the command is spelled CREATE USER, LOGIN is assumed by default, whereas NOLOGIN is assumed when the command is spelled CREATE ROLE.
 
@@ -120,8 +134,10 @@ To delete any databse:
 
 # Connect to a Database
 To connect to a database:
-`psql -h $host_ip_or_domain -p $port -U $username -W $dbname
-# using -W (capital W) will ask for a password, if you don't have any password use -w `
+```
+psql -h $host_ip_or_domain -p $port -U $username -W $dbname
+# using -W (capital W) will ask for a password, if you don't have any password use -w 
+```
 Example: `psql -h localhost -p 5432 -U eleus myfdb`
 ![CreateDB](https://user-images.githubusercontent.com/35254833/90166602-518ce600-ddbc-11ea-83fa-db32634ae9b6.PNG)
 
@@ -316,7 +332,7 @@ SELECT country_of_birth, COUNT(*) FROM person GROUP BY country_of_birth ORDER BY
 ```
 ![Capture](https://user-images.githubusercontent.com/35254833/90191116-1ac9c680-dde2-11ea-8613-22d94e8d37eb.PNG)
 
-##Group By Having
+## Group By Having
 For additional filtering on Group By, for example we want find all the countries with at-least 10 people.
 ```
 SELECT country_of_birth, COUNT(*) FROM person GROUP BY country_of_birth HAVING COUNT(8) > 40 ORDER BY country_of_birth;
@@ -326,18 +342,28 @@ SELECT country_of_birth, COUNT(*) FROM person GROUP BY country_of_birth HAVING C
 
 
 # Calculating Min, Max & Average
-MAX Example: `SELECT MAX(price) FROM car;`
-Min Example: `SELECT MIN(price) FROM car;`
-Avg Example: `SELECT AVG(price) FROM car;`
-Avg Example in round figure: `SELECT ROUND(AVG(price)) FROM car;`
+MAX Example: 
+```
+SELECT MAX(price) FROM car;
+```
+Min Example: 
+```
+SELECT MIN(price) FROM car;
+```
+Avg Example: 
+```
+SELECT AVG(price) FROM car;
+```
+Avg Example in round figure: 
+```
+SELECT ROUND(AVG(price)) FROM car;
+```
 
 Grouping the info to see different price for individual make:
-` SELECT make, model, MIN(price) FROM car GROUP BY make, model; `
-` SELECT make, model, MAX(price) FROM car GROUP BY make, model; `
-
-# Sum
-`SELECT SUM(price) from car;`
-`SELECT make, SUM(price) FROM car GROUP BY make;`
+``` 
+SELECT make, model, MIN(price) FROM car GROUP BY make, model;
+SELECT make, model, MAX(price) FROM car GROUP BY make, model; 
+```
 
 
 # Arithmatic Operators
@@ -357,6 +383,11 @@ Grouping the info to see different price for individual make:
 | |/     | square root                | |/ 25.0      |
 | ||/    | cubic root                 | ||/ 27.0     |
 
+## Sum
+```SELECT SUM(price) from car;
+`SELECT make, SUM(price) FROM car GROUP BY make;
+```
+
 Arithmetic Operators (ROUND):
 ```
 SELECT id, make, model, price, price * .10 FROM car;
@@ -366,12 +397,22 @@ SELECT id, make, model, price, price * .10 FROM car;
 
 # Coalesce
 COALESCE is a system in-built function that can be considered one of the conditional expressions available in PostgreSQL. NULLIF, GREATEST, LEAST, and COALESCE are the types of conditional expressions in PostgreSQL. The COALESCE function returns the first non-NULL expression in the specified list.
-Syntax: `COALESCE (argument_1, argument_2, …);`
-Example:`SELECT COALESCE(email, 'Email not provided)' FROM person`
+
+Syntax: 
+```COALESCE (argument_1, argument_2, …);
+```
+
+Example:
+```SELECT COALESCE(email, 'Email not provided)' FROM person
+```
 
 # Null IF
 The nullif() function returns a null value, if a the value of the field/column defined by the first parameter equals that of the second. Otherwise, it will return the original value.
-Example: `SELECT COALESCE(10 / NULLIF(0,0), 0);`
+
+Example: 
+```
+SELECT COALESCE(10 / NULLIF(0,0), 0);
+```
 
 # Time and Dates
 To show current time:
@@ -404,10 +445,11 @@ SELECT EXTRACT(DAY FROM NOW());
 
 # Age Functions
 he PostgreSQL age function returns the number of years, months, and days between two dates.
+
 Example:
-`
+```
 SELECT first_name, last_name, gender, country_of_birth AGE(NOW(), date_of_birth) AS age FROM person;
-`
+```
 # Primary Keys
 The PostgreSQL PRIMARY KEY is a column in a table which must contain a unique value which can be used to identify each and every row of a table uniquely. So it can be said that the PRIMARY KEY of a table is a combination of NOT NULL and UNIQUE constraint.
 
@@ -458,20 +500,19 @@ ON CONFLICT target action;
 When creating a database, common sense dictates that we use separate tables for different types of entities. Some examples are: customers, orders, items, messages etc... But we also need to have relationships between these tables. For instance, customers make orders, and orders contain items. These relationships need to be represented in the database. Also, when fetching data with SQL, we need to use certain types of JOIN queries to get what we need.
 
 There are several types of database relationships are as follows:
-- One to One Relationships
+- One to One Relationships:
 In a one-to-one relationship, one record in a table is associated with one and only one record in another table. For example, in a school database, each student has only one student ID, and each student ID is assigned to only one person.
 ![relational 07 03 2](https://user-images.githubusercontent.com/35254833/90256520-afc2d300-de67-11ea-934b-4563c04a2340.png)
 
-- One to Many and Many to One Relationships
+- One to Many and Many to One Relationships:
 In a one-to-many relationship, one record in a table can be associated with one or more records in another table. For example, each customer can have many sales orders.
 ![relational 07 04 2](https://user-images.githubusercontent.com/35254833/90256641-d254ec00-de67-11ea-8cfc-a75b2b07358c.png)
 
-- Many to Many Relationships
+- Many to Many Relationships:
 A many-to-many relationship occurs when multiple records in a table are associated with multiple records in another table. For example, a many-to-many relationship exists between customers and products: customers can purchase various products, and products can be purchased by many customers.
-
 Relational database systems usually don't allow you to implement a direct many-to-many relationship between two tables. Consider the example of keeping track of invoices. If there were many invoices with the same invoice number and one of your customers inquired about that invoice number, you wouldn't know which number they were referring to. This is one reason for assigning a unique value to each invoice.
 
-- Self Referencing Relationships
+- Self Referencing Relationships:
 This is used when a table needs to have a relationship with itself. For example, let's say you have a referral program. Customers can refer other customers to your shopping website.
 
 # PostgreSQL JOINS
@@ -479,27 +520,34 @@ The PostgreSQL Joins clause is used to combine records from two or more tables i
 
 There are 4 basic types of joins supported by PostgreSQL, namely:
 
-- Inner Joins
+- Inner Joins:
 the inner join returns a result set that contains row in the left table that matches the row in the right table.
 ![5311](https://user-images.githubusercontent.com/35254833/90266987-af7e0400-de76-11ea-8a5d-c5d8428cd485.png)
-Syntax:
-`SELECT $columns FROM $table1 JOIN $table2 ON $table1.joining_column = $table2.reference_column;
-`
 
-- Left (Outer) Joins
+Syntax:
+```
+SELECT $columns FROM $table1 JOIN $table2 ON $table1.joining_column = $table2.reference_column;
+```
+
+- Left (Outer) Joins:
 the left join returns a complete set of rows from the left table with the matching rows if available from the right table. If there is no match, the right side will have null values.
 ![5511](https://user-images.githubusercontent.com/35254833/90267097-e3f1c000-de76-11ea-9250-8fdf045926c6.png)
-Syntax:
-`SELECT $columns FROM $table1 LEFT JOIN $table2 ON $table1.joining_column = $table2.reference_column;
-`
 
-- Right (Outer) Joins
+Syntax:
+```
+SELECT $columns FROM $table1 LEFT JOIN $table2 ON $table1.joining_column = $table2.reference_column;
+```
+
+- Right (Outer) Joins:
 The RIGHT JOIN or RIGHT OUTER JOIN works exactly opposite to the LEFT JOIN. It returns a complete set of rows from the right table with the matching rows if available from the left table. If there is no match, the left side will have null values.
 ![5711](https://user-images.githubusercontent.com/35254833/90267165-0257bb80-de77-11ea-9b55-8113f38ee3d8.png)
-Syntax:
-`Select * FROM table1 RIGHT [ OUTER ] JOIN table2 ON table1.column_name=table2.column_name;`
 
-- Full Outer Joins
+Syntax:
+```
+Select * FROM table1 RIGHT [ OUTER ] JOIN table2 ON table1.column_name=table2.column_name;
+```
+
+- Full Outer Joins:
 The full outer join or full join returns a result set that contains all rows from both the left and right tables, with the matching rows from both sides where available. If there is no match, the missing side contains null values.
 ![592](https://user-images.githubusercontent.com/35254833/90267289-22877a80-de77-11ea-8ed5-9ac2dab97dcf.png)
 
@@ -509,7 +557,7 @@ Some special PostgreSQL joins are below:
 
 # Export Query Result to CSV
 In order to export a table or query to csv use one of the following commands:
-`\copy [Table/Query] to '[Relative Path/filename.csv]' csv header `
+```\copy [Table/Query] to '[Relative Path/filename.csv]' csv header ```
 
 # Serial & Sequesce
 A sequence in PostgreSQL is a user-defined schema-bound object that generates a sequence of integers based on a specified specification.
